@@ -1,0 +1,46 @@
+<mxfile host="65bd71144e">
+    <diagram id="9vr0d7iWxuDhZWM8PBPD" name="Page-1">
+        <mxGraphModel dx="575" dy="599" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="&lt;h2&gt;&lt;b&gt;Systems design plan&lt;/b&gt;&lt;/h2&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;/blockquote&gt;&lt;ol&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;General requirments&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Functional requirements&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Mock-up&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Component interface&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;State management&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Performance optimisation&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Accessibility&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;/blockquote&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=0;spacing=10;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="40" width="280" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="&lt;h2&gt;1. General requirements&lt;/h2&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;Component should provide autocomplete results based on the user input&amp;nbsp;&lt;/li&gt;&lt;li&gt;Component should work with generic data models&lt;/li&gt;&lt;li&gt;Component should efficiently request data and cache results&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Component should work with sync and async data&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=0;spacing=10;" vertex="1" parent="1">
+                    <mxGeometry x="360" y="40" width="260" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="&lt;h2&gt;Functional requirements&lt;/h2&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;Entering a query string fires a function. This function returns a set of results or an empty array.&lt;/li&gt;&lt;li&gt;Component display a list of results in a dropdown with a limited number of results.&lt;/li&gt;&lt;li&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingTop=0;spacing=10;" vertex="1" parent="1">
+                    <mxGeometry x="660" y="40" width="260" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="7" target="8">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="7" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="7" target="12">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Architecture types" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="420" y="360" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="8" target="14">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Stateless" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="480" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Statefull" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="420" y="480" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="Hybrid" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="560" y="480" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="&lt;b&gt;Pros&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/b&gt;" style="whiteSpace=wrap;html=1;rounded=0;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="620" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

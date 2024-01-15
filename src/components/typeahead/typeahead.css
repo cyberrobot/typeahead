@@ -1,0 +1,58 @@
+#typeahead {
+  position: relative;
+}
+
+#typeahead svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  position: absolute;
+  top: 1rem;
+  left: 0.8rem;
+  fill: rgba(235, 235, 245, 0.6);
+  transition: fill 0.25s, color 0.25s;
+}
+
+#typeahead:focus-within svg,
+#typeahead:hover svg {
+  fill: #646cff;
+}
+
+input {
+  width: 18.75rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.8rem;
+  padding-left: 2.75rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  color: rgba(235, 235, 245, 0.6);
+  transition: border-color 0.25s, color 0.25s;
+}
+input:hover,
+input:focus {
+  border-color: #646cff;
+  color: #fff;
+}
+input:focus,
+input:focus-visible {
+  outline: none;
+}
+
+@media (prefers-color-scheme: light) {
+  #typeahead svg {
+    fill: var(--docsearch-muted-color);
+  }
+
+  input,
+  input:focus,
+  input:focus-visible {
+    background-color: var(--vp-c-bg-alt);
+    color: var(--docsearch-muted-color);
+  }
+
+  input:hover {
+    color: var(--docsearch-muted-color);
+  }
+}
