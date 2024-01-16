@@ -6,6 +6,7 @@ type DropdownMenuParams<T> = {
   data: T[];
   count?: number;
   labelBy?: keyof T;
+  renderItem?: (fn: T) => string;
 };
 
 export const dropdownMenu = <T>({
@@ -14,6 +15,7 @@ export const dropdownMenu = <T>({
   data,
   count,
   labelBy = <keyof T>'name',
+  renderItem,
 }: DropdownMenuParams<T>) => {
   if (count) {
     data = data.slice(0, count);
@@ -29,7 +31,9 @@ export const dropdownMenu = <T>({
     <div class="dropdown">
       ${data
         .map(
-          (item) => `
+          (item) =>
+            (renderItem && renderItem(item)) ||
+            `
             <div class="dropdown__link">${item[labelBy]}</div>
         `
         )

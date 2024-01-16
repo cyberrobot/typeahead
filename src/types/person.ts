@@ -7,5 +7,7 @@ export type Person = {
   original_name: string;
   popularity: number;
   profile_path: string;
-  known_for: unknown[];
+  known_for: {
+    title: string;
+  }[];
 };

@@ -2,7 +2,7 @@
   position: relative;
 }
 
-#typeahead svg {
+#typeahead .typeahead__search_icon {
   width: 1.25rem;
   height: 1.25rem;
   position: absolute;
@@ -12,8 +12,8 @@
   transition: fill 0.25s, color 0.25s;
 }
 
-#typeahead:focus-within svg,
-#typeahead:hover svg {
+#typeahead:focus-within .typeahead__search_icon,
+#typeahead:hover .typeahead__search_icon {
   fill: #646cff;
 }
 
@@ -41,7 +41,7 @@ input:focus-visible {
 }
 
 @media (prefers-color-scheme: light) {
-  #typeahead svg {
+  #typeahead .typeahead__search_icon {
     fill: var(--docsearch-muted-color);
   }
 

@@ -1,8 +1,9 @@
 .dropdown {
   margin-top: 0.125rem;
   border-radius: 12px;
-  padding: 12px;
-  min-width: 128px;
+  padding: 0.75rem;
+  min-width: 8rem;
+  max-width: 18.75rem;
   border: 1px solid var(--vp-c-divider);
   background-color: var(--vp-c-bg-dark);
   box-shadow: var(--vp-shadow-3);
