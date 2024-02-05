@@ -106,6 +106,7 @@ body {
 .dropdown__link__search_item .typeahead__avatar {
   width: 2.5rem;
   height: 2.5rem;
+  border-radius: 0.25rem;
 }
 
 .dropdown__link__search_item__subtitle {

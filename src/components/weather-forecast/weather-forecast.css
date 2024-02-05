@@ -1,0 +1,26 @@
+.weather_forecast__container {
+  display: flex;
+  margin-top: 2.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--vp-c-divider);
+  background-color: var(--vp-c-bg-dark);
+  padding: 20px;
+  gap: 20px;
+}
+
+.weather_forecast__container .weather_forecast__item {
+  font-size: 1rem;
+}
+
+.weather_forecast__container .weather_forecast__item__temperature {
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-top: 0.5rem;
+}
+
+@media (prefers-color-scheme: light) {
+  .weather_forecast__container {
+    border: 1px solid var(--vp-c-divider-soft);
+    background-color: var(--vp-c-bg-soft);
+  }
+}

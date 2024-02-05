@@ -1,19 +1,21 @@
 import { FetchDataParams, typeahead } from './components/typeahead/typeahead';
-import { personSearch } from './helpers/data';
+import { weatherForecastComponent } from './components/weather-forecast/weather-forecast';
+import { getAddress } from './helpers/address';
+import { getWeatherForecast, getLocation } from './helpers/data';
 import { addToCache, getFromCache } from './stores/input';
 import './style.css';
-import { Person } from './types/person';
+import { Location } from './types/location';
 
-function fetchData({ query }: FetchDataParams): Promise<Person[]> {
-  return new Promise<Person[]>((resolve) => {
+function fetchData({ query }: FetchDataParams): Promise<Location[]> {
+  return new Promise<Location[]>((resolve) => {
     if (query.length) {
-      const fromCache = getFromCache(query) as Person[];
+      const fromCache = getFromCache(query) as Location[];
       if (fromCache) {
         resolve(fromCache);
         return;
       }
 
-      personSearch(query).then((data) => {
+      getLocation(query).then((data) => {
         addToCache(query, data.results);
         resolve(data.results);
       });
@@ -21,39 +23,33 @@ function fetchData({ query }: FetchDataParams): Promise<Person[]> {
   });
 }
 
-function renderSearchItem(item: Person): string {
-  const placeholder = `
-    <svg class="typeahead__avatar" fill="#000000" xmlns="http://www.w3.org/2000/svg"  width="100" height="100"
-      viewBox="0 0 100 100" xml:space="preserve">
-    
-    <g>
-      <g>
-        <path d="M80,71.2V74c0,3.3-2.7,6-6,6H26c-3.3,0-6-2.7-6-6v-2.8c0-7.3,8.5-11.7,16.5-15.2c0.3-0.1,0.5-0.2,0.8-0.4
-          c0.6-0.3,1.3-0.3,1.9,0.1C42.4,57.8,46.1,59,50,59c3.9,0,7.6-1.2,10.8-3.2c0.6-0.4,1.3-0.4,1.9-0.1c0.3,0.1,0.5,0.2,0.8,0.4
-          C71.5,59.5,80,63.9,80,71.2z"/>
-      </g>
-      <g>
-        <ellipse cx="50" cy="36.5" rx="14.9" ry="16.5"/>
-      </g>
-    </g>
-    </svg>
-  `;
-  const avatar = item.profile_path
-    ? `<img src="https://image.tmdb.org/t/p/w180_and_h180_face${item.profile_path}" />`
-    : placeholder;
-  const knownFor = item.known_for
-    .filter((item) => item.title)
-    .map((item) => item.title)
-    .join(', ');
+function renderSearchItem(item: Location): string {
   return `
-    <div class="dropdown__link__search_item">
-    <div class="typeahead__avatar__container">${avatar}</div>
+    <div class="dropdown__link__search_item" data-lat=${
+      item.latitude
+    } data-long=${item.longitude}>
       <div class="dropdown__link__search-item__text">
         <div class="dropdown__link__search_item__title">${item.name}</div>
-        <div class="dropdown__link__search_item__subtitle">${knownFor}</div>
+        <div class="dropdown__link__search_item__subtitle">${getAddress(
+          item
+        )}</div>
       </div>
     </div>
   `;
+}
+
+function onItemClick(event: Event) {
+  const { currentTarget } = event;
+  const lat = (currentTarget as HTMLDivElement).dataset.lat;
+  const long = (currentTarget as HTMLDivElement).dataset.long;
+  if (lat && long) {
+    getWeatherForecast(Number(lat), Number(long)).then((data) => {
+      weatherForecastComponent({
+        element: document.querySelector<HTMLDivElement>('#weather-forecast')!,
+        data,
+      });
+    });
+  }
 }
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
@@ -70,12 +66,14 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </svg>
     <input id="search-field" type="text" placeholder="Search" />
   </div>
+  <div id="weather-forecast"></div>
 `;
 
-typeahead<Person>({
+typeahead<Location>({
   element: document.querySelector<HTMLInputElement>('#search-field')!,
   fetchData,
   minQuery: 0,
   maxResults: 7,
   renderItem: renderSearchItem,
+  onClick: onItemClick,
 });

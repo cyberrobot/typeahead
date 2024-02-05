@@ -9,6 +9,7 @@ export type RenderResultsParams<T> = {
   count?: number;
   labelBy?: keyof T;
   renderItem?: (fn: T) => string;
+  onClick?: (event: Event) => void;
 };
 
 export type FetchDataParams = {
@@ -21,6 +22,7 @@ export type TypeaheadProps<T> = {
   renderItem?: (fn: T) => string;
   minQuery?: number;
   maxResults?: number;
+  onClick?: (event: Event) => void;
 };
 
 function renderSearchResults<T>({
@@ -28,6 +30,7 @@ function renderSearchResults<T>({
   data,
   count,
   renderItem,
+  onClick,
 }: RenderResultsParams<T>) {
   const resultsElement = document.createElement('div');
   resultsElement.classList.add('results-container');
@@ -39,6 +42,7 @@ function renderSearchResults<T>({
     data,
     count,
     renderItem,
+    onClick,
   });
 }
 
@@ -48,57 +52,67 @@ function destroySearchResults(element: HTMLInputElement) {
   }
 }
 
+async function onHandle<T>({
+  element,
+  minQuery,
+  maxResults,
+  renderItem,
+  fetchData,
+  onClick,
+}: TypeaheadProps<T>) {
+  if (minQuery != undefined && element.value.length >= minQuery) {
+    const query = element.value;
+    if (query.length) {
+      let data = getFromCache(query) as T[];
+      if (!data) {
+        data = (await fetchData({ query: element.value })) as T[];
+      }
+      renderSearchResults({
+        element,
+        data,
+        count: maxResults,
+        renderItem,
+        onClick,
+      });
+      return;
+    }
+    destroySearchResults(element);
+  }
+}
+
 export function typeahead<T>({
   element,
   fetchData,
   renderItem,
   minQuery = 3,
   maxResults = 10,
+  onClick,
 }: TypeaheadProps<T>) {
   element.addEventListener(
     'input',
-    debounce(async () => {
-      const query = element.value;
-      if (element.value.length >= minQuery) {
-        if (query.length) {
-          const fromCache = getFromCache(query) as T[];
-          if (fromCache) {
-            renderSearchResults({
-              element,
-              data: fromCache,
-              count: maxResults,
-              renderItem,
-            });
-            return;
-          }
-          const data = (await fetchData({ query: element.value })) as T[];
-          renderSearchResults({ element, data, count: maxResults, renderItem });
-          return;
-        }
-        destroySearchResults(element);
-      }
-    })
+    debounce(
+      async () =>
+        await onHandle<T>({
+          element,
+          minQuery,
+          maxResults,
+          fetchData,
+          renderItem,
+          onClick,
+        })
+    )
   );
 
-  element.addEventListener('focus', async () => {
-    if (element.value.length >= minQuery) {
-      const query = element.value;
-      if (query.length) {
-        const fromCache = getFromCache(query) as T[];
-        if (fromCache) {
-          renderSearchResults({
-            element,
-            data: fromCache,
-            count: maxResults,
-            renderItem,
-          });
-          return;
-        }
-        const data = (await fetchData({ query: element.value })) as T[];
-        renderSearchResults({ element, data, count: maxResults, renderItem });
-        return;
-      }
-      destroySearchResults(element);
-    }
-  });
+  element.addEventListener(
+    'focus',
+    async () =>
+      await onHandle<T>({
+        element,
+        minQuery,
+        maxResults,
+        fetchData,
+        renderItem,
+        onClick,
+      })
+  );
 }

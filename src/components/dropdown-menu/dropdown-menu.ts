@@ -7,6 +7,7 @@ type DropdownMenuParams<T> = {
   count?: number;
   labelBy?: keyof T;
   renderItem?: (fn: T) => string;
+  onClick?: (event: Event) => void; // Update the type of onClick callback
 };
 
 export const dropdownMenu = <T>({
@@ -16,28 +17,61 @@ export const dropdownMenu = <T>({
   count,
   labelBy = <keyof T>'name',
   renderItem,
+  onClick,
 }: DropdownMenuParams<T>) => {
-  if (count) {
+  if (!data) {
+    element.innerHTML = `
+      <div class="dropdown">
+        <div class="dropdown__link">No results found</div>
+      </div>
+    `;
+    return;
+  }
+
+  if (data && count && data.length > count) {
     data = data.slice(0, count);
   }
 
-  document.addEventListener('click', (event) => {
-    if (!element.contains(event.target as Node) && input !== event.target) {
-      element.remove();
-    }
-  });
+  if (renderItem) {
+    const dropdownEl = document.createElement('div');
+    dropdownEl.classList.add('dropdown');
 
-  element.innerHTML = `
+    data.forEach((item) => {
+      const doc = new DOMParser().parseFromString(
+        renderItem(item),
+        'text/html'
+      );
+      const node = doc.body.firstChild;
+      if (!node) {
+        return;
+      }
+      node.addEventListener('click', (event) => {
+        if (onClick) {
+          onClick(event);
+        }
+      });
+      dropdownEl.appendChild(node as Node);
+    });
+    element.innerHTML = '';
+    element.appendChild(dropdownEl);
+  } else {
+    element.innerHTML = `
     <div class="dropdown">
       ${data
         .map(
           (item) =>
-            (renderItem && renderItem(item)) ||
             `
-            <div class="dropdown__link">${item[labelBy]}</div>
+        <div class="dropdown__link">${item[labelBy]}</div>
         `
         )
         .join('')}
     </div>
   `;
+  }
+
+  document.addEventListener('click', (event) => {
+    if (input !== event.target) {
+      element.remove();
+    }
+  });
 };
