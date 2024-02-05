@@ -1,10 +1,9 @@
 .dropdown {
+  width: 18.75rem;
   position: absolute;
   margin-top: 0.125rem;
   border-radius: 12px;
   padding: 0.75rem;
-  min-width: 8rem;
-  max-width: 18.75rem;
   border: 1px solid var(--vp-c-divider);
   background-color: var(--vp-c-bg-dark);
   box-shadow: var(--vp-shadow-3);
@@ -30,6 +29,12 @@
 .dropdown__link:hover {
   color: var(--vp-c-brand-lighter);
   background-color: var(--vp-c-default-soft);
+}
+
+.dropdown_inactive:hover {
+  color: var(--vp-c-text-1-soft);
+  background: transparent;
+  cursor: default;
 }
 
 @media (prefers-color-scheme: light) {

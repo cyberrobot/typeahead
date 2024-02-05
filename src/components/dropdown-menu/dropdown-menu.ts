@@ -22,7 +22,7 @@ export const dropdownMenu = <T>({
   if (!data) {
     element.innerHTML = `
       <div class="dropdown">
-        <div class="dropdown__link">No results found</div>
+        <div class="dropdown__link dropdown_inactive">No results found</div>
       </div>
     `;
     return;
