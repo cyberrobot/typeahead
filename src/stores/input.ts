@@ -1,9 +1,9 @@
-const inputCache: { [key: string]: unknown } = {};
+const cache = new Map<string, any>();
 
 export const addToCache = (key: string, value: unknown) => {
-  inputCache[key] = value;
+  cache.set(key, value);
 };
 
 export const getFromCache = (key: string) => {
-  return inputCache[key];
+  return cache.get(key);
 };
